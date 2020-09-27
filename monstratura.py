@@ -63,7 +63,6 @@ def GUI():
         
         opcoes.pack(padx=1, pady=20)
     
-
     botoes()
     janela.mainloop()
 
