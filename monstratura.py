@@ -1,136 +1,185 @@
-from tkinter import *
+import pygame, os, sys
+from pygame.locals import *
 from tkinter import font as tkFont
-import time
-import sys
 
 
-# MONTANDO A GUI
-def GUI():
-    
-    janela = Tk() # instância de uma janela
-    janela.title('M O N S T R A T U R A')
-    #janela.resizable(False, False)
-    # calculando a posição
-    w = 350 
-    h = 450 
-    ws = janela.winfo_screenwidth()
-    hs = janela.winfo_screenheight()
-    x = (ws/2) - (w/2)
-    y = (hs/2) - (h/2)
-    janela.geometry('%dx%d+%d+%d' % (w, h, x, y)) # setando a posição no meio
-    janela.configure(bg="white")
-    
-    # Fonte
-    smallFonts16 = tkFont.Font(family='Small Fonts', size=16)
-    fixedSys18 = tkFont.Font(family='Fixedsys', size=18)
-    
-    # Função Iniciar: oculta os widgets da tela e inicia o jogo
-    def Iniciar(x,y,z,b,jan):
-        x.pack_forget()
-        y.pack_forget()
-        z.pack_forget()
-        b.pack_forget()
-        prologo(jan)
+os.chdir(r'C:\Users\paula.moraes\Desktop\ADS\zOutros\MONSTRATURA')
 
-    def prologo(jan):
-        baner = Label(jan, text='\nOlá', bg="white", fg="black", font=fixedSys18)
-        baner.pack(padx=1, pady=60)
+main_clock = pygame.time.Clock()
+pygame.init()
+pygame.display.set_caption('M O N S T R A T U R A')
+screen = pygame.display.set_mode((350, 450),0,32)
+click = False
 
-        ir = Button(jan, text=" ! ", 
-                                fg="black", 
-                                bg="#FCFBD7", 
-                                height=1, 
-                                width=2,
-                                font=fixedSys18)
-        ir.pack(padx=1, pady=1)
-        cont = 0
-        def skip(cont, ir, ban):
-            cont += 1
-            if cont == 1:
-                msg = "\nVocê está prestes\n a iniciar em uma \nnova aventura!"
-                ban.configure(text=msg)
-            elif cont == 2:
-                msg = "\nMas antes \nvejamos alguns \ncomandos básicos."
-                ban.configure(text=msg)
-            elif cont == 3:
-                ban.configure(text=" ")
-                ban.pack(padx=1, pady=1)
-                jogar = Button(janela, text="j",
-                                        fg="black",
-                                        bg="#FCFBD7",
-                                        font=fixedSys18)
-                jogar.pack(padx=1, pady=10)
-                # jogar.grid(row=1, column=1)
-                
-                mochila = Button(janela, text="m",
-                                        fg="black",
-                                        bg="#FCFBD7",
-                                        font=fixedSys18)
-                mochila.pack(padx=1, pady=10)
+consolas = pygame.font.SysFont('consolas', 24)
 
-                opcoes = Button(janela, text="o",
-                                        fg="black",
-                                        bg="#FCFBD7",
-                                        font=fixedSys18)
-                opcoes.pack(padx=1, pady=10)
-
-                atributos = Button(janela, text="a",
-                        fg="black",
-                        bg="#FCFBD7",
-                        font=fixedSys18)
-                atributos.pack(padx=1, pady=10)
-                
-                salvar = Button(janela, text="s",
-                                        fg="black",
-                                        bg="#FCFBD7",
-                                        font=fixedSys18)
-                salvar.pack(padx=1, pady=10)
-
-                sair = Button(janela, text="e",
-                                        fg="black",
-                                        bg="#FCFBD7",
-                                        font=fixedSys18)
-                sair.pack(padx=1, pady=10)
-
-                ir.pack(side=BOTTOM)
-            ir.configure(command=lambda:skip(cont, ir,baner))
-        ir.configure(command=lambda:skip(cont, ir,baner))      
+img_iniciar = pygame.image.load('btn_iniciar.png')
+img_continuar = pygame.image.load('btn_continuar.png')
+img_opcoes = pygame.image.load('btn_opcoes.png')
 
 
-    def botoes():
-        baner = Label(janela, text=" ",bg="white")
-        baner.pack(padx=1,pady=20)
+def draw_text(text, font, color, surface, x, y):
+    textobj = font.render(text, 1, color)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 
-        # Botões
-        iniciar = Button(janela, text="I n i c i a r", 
-                                fg="black", 
-                                bg="#FCFBD7", 
-                                height=2, 
-                                width=12,
-                                font=smallFonts16)
+def draw_background():
+    screen.fill((255,255,200))
+
+def create_buttons(btn_obj):
+    if btn_obj == 'i':
+        btn = pygame.Rect(80, 100, 200, 50)
+        return btn
+    if btn_obj == 'c':
+        btn = pygame.Rect(80, 200, 200, 50)
+        return btn
+    if btn_obj == 'o':
+        btn = pygame.Rect(80, 300, 200, 50)
+        return btn
+    else:
+        pass
+ 
+def main_menu():
+    while True:
+        draw_background()
+        draw_text('menu principal', consolas, (0, 0, 0), screen, 30, 20)
         
-        iniciar.pack(padx=1, pady=20)
-        iniciar.configure(command=lambda:Iniciar(iniciar, continuar, opcoes, baner, janela))
 
-        continuar = Button(janela, text="C o n t i n u a r", 
-                            fg="black", 
-                            bg="#FCFBD7", 
-                            height=2, 
-                            width=12,
-                            font=smallFonts16)
+        mx, my = pygame.mouse.get_pos()
         
-        continuar.pack(padx=1, pady=20)
+        # create_buttons(btn_obj)
+        btn_iniciar = create_buttons('i')
+        btn_continuar = create_buttons('c')
+        btn_opcoes = create_buttons('o')
 
-        opcoes = Button(janela, text="O p ç õ e s", 
-                        fg="black", 
-                        bg="#FCFBD7", 
-                        height=2, 
-                        width=12,
-                        font=smallFonts16)
+        # create egdes
+        edge_top = pygame.Rect(10, 10, 330, 10)
+        edge_right = pygame.Rect(10, 420, 330, 10)
+        edge_bottom = pygame.Rect(330,10,10, 410)
+        edge_left = pygame.Rect(10,10,10,410)
         
-        opcoes.pack(padx=1, pady=20)
-    
-    botoes()
-    janela.mainloop()
+        
+        if btn_iniciar.collidepoint((mx, my)):
+            if click:
+                iniciar()
+        if btn_continuar.collidepoint((mx, my)):
+            if click:
+                continuar()
+        if btn_opcoes.collidepoint((mx, my)):
+            if click:
+                opcoes()
+        
+        pygame.draw.rect(screen, (0, 0, 0), btn_iniciar)
+        pygame.draw.rect(screen, (0, 0, 0), btn_continuar)
+        pygame.draw.rect(screen, (0, 0, 0), btn_opcoes)
+        pygame.draw.rect(screen, (194, 120, 194), edge_top)
+        pygame.draw.rect(screen, (194, 120, 194), edge_right)
+        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
+        pygame.draw.rect(screen, (194, 120, 194), edge_left)
 
-GUI()
+        
+
+        click = False
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+        
+        screen.blit(img_iniciar, btn_iniciar)
+        screen.blit(img_continuar, btn_continuar)
+        screen.blit(img_opcoes, btn_opcoes)
+        pygame.display.update()
+        main_clock.tick(60)
+        
+ 
+def iniciar():
+    running = True
+    while running:
+        draw_background()
+        
+        # create egdes
+        edge_top = pygame.Rect(10, 10, 330, 10)
+        edge_right = pygame.Rect(10, 420, 330, 10)
+        edge_bottom = pygame.Rect(330,10,10, 410)
+        edge_left = pygame.Rect(10,10,10,410)
+
+        draw_text('iniciar', consolas, (0, 0, 0), screen, 30, 20)
+        
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+        
+        pygame.draw.rect(screen, (194, 120, 194), edge_top)
+        pygame.draw.rect(screen, (194, 120, 194), edge_right)
+        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
+        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.display.update()
+        main_clock.tick(60)
+ 
+def continuar():
+    running = True
+    while running:
+        draw_background()
+
+        # create egdes
+        edge_top = pygame.Rect(10, 10, 330, 10)
+        edge_right = pygame.Rect(10, 420, 330, 10)
+        edge_bottom = pygame.Rect(330,10,10, 410)
+        edge_left = pygame.Rect(10,10,10,410)
+ 
+        draw_text('continuar', consolas, (0, 0, 0), screen, 30, 20)
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+        
+        pygame.draw.rect(screen, (194, 120, 194), edge_top)
+        pygame.draw.rect(screen, (194, 120, 194), edge_right)
+        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
+        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.display.update()
+        main_clock.tick(60)
+
+def opcoes():
+    running = True
+    while running:
+        draw_background()
+
+        # create egdes
+        edge_top = pygame.Rect(10, 10, 330, 10)
+        edge_right = pygame.Rect(10, 420, 330, 10)
+        edge_bottom = pygame.Rect(330,10,10, 410)
+        edge_left = pygame.Rect(10,10,10,410)
+
+        draw_text(' opcoes', consolas, (0, 0, 0), screen, 20, 20)
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+        
+        pygame.draw.rect(screen, (194, 120, 194), edge_top)
+        pygame.draw.rect(screen, (194, 120, 194), edge_right)
+        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
+        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.display.update()
+        main_clock.tick(60)
+
+main_menu()
