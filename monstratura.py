@@ -9,6 +9,7 @@ main_clock = pygame.time.Clock()
 pygame.init()
 pygame.display.set_caption('M O N S T R A T U R A')
 screen = pygame.display.set_mode((1020, 620),0,32)
+screen_color = (255,255,200)
 click = False
 
 consolas = pygame.font.SysFont('consolas', 24)
@@ -30,9 +31,6 @@ def draw_text(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
-def draw_background():
-    screen.fill((255,255,200))
-
 def create_buttons(btn_obj):
     if btn_obj == 'i':
         btn = pygame.Rect(410, 200, 200, 50)
@@ -48,9 +46,8 @@ def create_buttons(btn_obj):
  
 def main_menu():
     while True:
-        draw_background()
+        screen.fill(screen_color)
         draw_text('menu principal', consolas, (0, 0, 0), screen, 30, 20)
-        
 
         mx, my = pygame.mouse.get_pos()
         
@@ -98,11 +95,10 @@ def main_menu():
         pygame.display.update()
         main_clock.tick(60)
         
- 
 def iniciar():
     running = True
     while running:
-        draw_background()
+        screen.fill(screen_color)
 
         draw_text('iniciar', consolas, (0, 0, 0), screen, 30, 20)
         for event in pygame.event.get():
@@ -123,7 +119,7 @@ def iniciar():
 def continuar():
     running = True
     while running:
-        draw_background()
+        screen.fill(screen_color)
  
         draw_text('continuar', consolas, (0, 0, 0), screen, 30, 20)
         for event in pygame.event.get():
@@ -144,7 +140,8 @@ def continuar():
 def opcoes():
     running = True
     while running:
-        draw_background()
+        screen.fill(screen_color)
+        
         draw_text(' opcoes', consolas, (0, 0, 0), screen, 20, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
