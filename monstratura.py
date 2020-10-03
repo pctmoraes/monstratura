@@ -1,22 +1,28 @@
-import pygame, os, sys
+import pygame, os, sys, pathlib
 from pygame.locals import *
 from tkinter import font as tkFont
 
-
-os.chdir(r'C:\Users\paula.moraes\Desktop\ADS\zOutros\MONSTRATURA')
+current_dir = pathlib.Path(__file__).parent
+os.chdir(current_dir)
 
 main_clock = pygame.time.Clock()
 pygame.init()
 pygame.display.set_caption('M O N S T R A T U R A')
-screen = pygame.display.set_mode((350, 450),0,32)
+screen = pygame.display.set_mode((1020, 620),0,32)
 click = False
 
 consolas = pygame.font.SysFont('consolas', 24)
 
+# load
 img_iniciar = pygame.image.load('btn_iniciar.png')
 img_continuar = pygame.image.load('btn_continuar.png')
 img_opcoes = pygame.image.load('btn_opcoes.png')
 
+# create egdes
+edge_top = pygame.Rect(10, 10, 1000, 10)
+edge_right = pygame.Rect(1000,10,10,600)
+edge_bottom = pygame.Rect(10, 600, 1000, 10)
+edge_left = pygame.Rect(10, 10, 10, 600)
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -29,13 +35,13 @@ def draw_background():
 
 def create_buttons(btn_obj):
     if btn_obj == 'i':
-        btn = pygame.Rect(80, 100, 200, 50)
+        btn = pygame.Rect(410, 200, 200, 50)
         return btn
     if btn_obj == 'c':
-        btn = pygame.Rect(80, 200, 200, 50)
+        btn = pygame.Rect(410, 280, 200, 50)
         return btn
     if btn_obj == 'o':
-        btn = pygame.Rect(80, 300, 200, 50)
+        btn = pygame.Rect(410, 360, 200, 50)
         return btn
     else:
         pass
@@ -51,14 +57,7 @@ def main_menu():
         # create_buttons(btn_obj)
         btn_iniciar = create_buttons('i')
         btn_continuar = create_buttons('c')
-        btn_opcoes = create_buttons('o')
-
-        # create egdes
-        edge_top = pygame.Rect(10, 10, 330, 10)
-        edge_right = pygame.Rect(10, 420, 330, 10)
-        edge_bottom = pygame.Rect(330,10,10, 410)
-        edge_left = pygame.Rect(10,10,10,410)
-        
+        btn_opcoes = create_buttons('o')        
         
         if btn_iniciar.collidepoint((mx, my)):
             if click:
@@ -104,15 +103,8 @@ def iniciar():
     running = True
     while running:
         draw_background()
-        
-        # create egdes
-        edge_top = pygame.Rect(10, 10, 330, 10)
-        edge_right = pygame.Rect(10, 420, 330, 10)
-        edge_bottom = pygame.Rect(330,10,10, 410)
-        edge_left = pygame.Rect(10,10,10,410)
 
         draw_text('iniciar', consolas, (0, 0, 0), screen, 30, 20)
-        
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -132,12 +124,6 @@ def continuar():
     running = True
     while running:
         draw_background()
-
-        # create egdes
-        edge_top = pygame.Rect(10, 10, 330, 10)
-        edge_right = pygame.Rect(10, 420, 330, 10)
-        edge_bottom = pygame.Rect(330,10,10, 410)
-        edge_left = pygame.Rect(10,10,10,410)
  
         draw_text('continuar', consolas, (0, 0, 0), screen, 30, 20)
         for event in pygame.event.get():
@@ -159,13 +145,6 @@ def opcoes():
     running = True
     while running:
         draw_background()
-
-        # create egdes
-        edge_top = pygame.Rect(10, 10, 330, 10)
-        edge_right = pygame.Rect(10, 420, 330, 10)
-        edge_bottom = pygame.Rect(330,10,10, 410)
-        edge_left = pygame.Rect(10,10,10,410)
-
         draw_text(' opcoes', consolas, (0, 0, 0), screen, 20, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
