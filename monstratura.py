@@ -1,4 +1,4 @@
-import pygame, os, sys, pathlib
+import pygame, os, sys, pathlib, shelve
 from pygame.locals import *
 from tkinter import font as tkFont
 
@@ -58,13 +58,13 @@ def main_menu():
         
         if btn_iniciar.collidepoint((mx, my)):
             if click:
-                iniciar()
+                start()
         if btn_continuar.collidepoint((mx, my)):
             if click:
-                continuar()
+                continue_()
         if btn_opcoes.collidepoint((mx, my)):
             if click:
-                opcoes()
+                options()
         
         pygame.draw.rect(screen, (0, 0, 0), btn_iniciar)
         pygame.draw.rect(screen, (0, 0, 0), btn_continuar)
@@ -95,11 +95,10 @@ def main_menu():
         pygame.display.update()
         main_clock.tick(60)
         
-def iniciar():
+def start():
     running = True
     while running:
         screen.fill(screen_color)
-
         draw_text('iniciar', consolas, (0, 0, 0), screen, 30, 20)
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -116,7 +115,7 @@ def iniciar():
         pygame.display.update()
         main_clock.tick(60)
  
-def continuar():
+def continue_():
     running = True
     while running:
         screen.fill(screen_color)
@@ -137,7 +136,7 @@ def continuar():
         pygame.display.update()
         main_clock.tick(60)
 
-def opcoes():
+def options():
     running = True
     while running:
         screen.fill(screen_color)
@@ -157,5 +156,14 @@ def opcoes():
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
         pygame.display.update()
         main_clock.tick(60)
+
+# essa função SOMENTE será acionada no botão "Salvar" do menu principal
+def save_game(): # passado como parâmetro o objeto Player
+    save = shelve.open('save')
+    # será atribuida às chaves do save.bak os atributos do player
+    # exemplo:
+    # save['char_name'] = char.char_name
+    # etc
+    save.close()
 
 main_menu()
