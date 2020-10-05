@@ -1,6 +1,5 @@
 import pygame, os, sys, pathlib, shelve, time
 from pygame.locals import *
-# from tkinter import font as tkFont
 
 current_dir = pathlib.Path(__file__).parent
 os.chdir(current_dir)
@@ -38,6 +37,24 @@ edge_top = pygame.Rect(10, 10, 1000, 10)
 edge_right = pygame.Rect(1000,10,10,600)
 edge_bottom = pygame.Rect(10, 600, 1000, 10)
 edge_left = pygame.Rect(10, 10, 10, 600)
+
+class player:
+    name = None
+    sex = None
+    profession = None
+    level = None
+    hit_points = None       
+    mana_points = None
+    gold = None
+    helm = None
+    armor = None
+    legs = None
+    boots = None
+    weapon = None
+    shield = None
+    inventory = {}
+
+player = player()
 
 def blit_text(surface, text, pos, font, color):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
@@ -141,7 +158,7 @@ def initial_menu():
         
         if btn_iniciar.collidepoint((mx, my)):
             if click:
-                start()
+                new_game()
         if btn_continuar.collidepoint((mx, my)):
             if click:
                 continue_()
@@ -163,7 +180,7 @@ def initial_menu():
         pygame.display.update()
         main_clock.tick(60)
         
-def start():
+def new_game():
     running = True
     while running:
         hello = 'Olá,'
@@ -339,11 +356,11 @@ def char_sex_def():
         btn_masc = create_char_def_btns('m')
         if btn_fem.collidepoint((mx,my)):
             if click:
-                # self.sex = 'f'
+                player.sex = 'f'
                 char_prfs_fem()
         if btn_masc.collidepoint((mx,my)):
             if click:
-                # self.sex = 'm'
+                player.sex = 'm'
                 char_prfs_male()
 
 
@@ -384,13 +401,16 @@ def char_prfs_male():
 
         if btn_mage.collidepoint((mx, my)):
             if click:
-                options()
+                player.profession = 'mage'
+                char_name_def()
         if btn_archer.collidepoint((mx, my)):
             if click:
-                options()
+                player.profession = 'archer'
+                char_name_def()
         if btn_sword.collidepoint((mx, my)):
             if click:
-                options()
+                player.profession = 'sword'
+                char_name_def()
 
         draw_text('Mago', consolas, (0,0,0), screen, 257, 400)
         draw_text('Arqueiro', consolas, (0,0,0), screen, 455, 400)
@@ -435,15 +455,15 @@ def char_prfs_fem():
 
         if btn_mage.collidepoint((mx, my)):
             if click:
-                # self.profission = mage
+                player.profession = 'mage'
                 char_name_def()
         if btn_archer.collidepoint((mx, my)):
             if click:
-                # self.profission = mage
+                player.profession = 'archer'
                 char_name_def()
         if btn_sword.collidepoint((mx, my)):
             if click:
-                # self.profission = mage
+                player.profession = 'sword'
                 char_name_def()
 
         draw_text('Maga', consolas, (0,0,0), screen, 257, 400)
@@ -495,7 +515,7 @@ def char_name_def():
         btn_skip = create_initial_buttons('s')
         if btn_skip.collidepoint((mx, my)):
             if click:
-        #         self.name = user_text
+                player.name = user_text
                 game_on()
 
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
@@ -512,7 +532,7 @@ def game_on():
     running = True
     while running:
         screen.fill(screen_color)
-        draw_text(' game on!', consolas, (0, 0, 0), screen, 20, 20)
+        draw_text(player.name, consolas, (0, 0, 0), screen, 20, 20)
 
         for event in pygame.event.get():
             if event.type == QUIT:
