@@ -17,6 +17,7 @@ img_iniciar = pygame.image.load('btn_iniciar.png')
 img_continuar = pygame.image.load('btn_continuar.png')
 img_opcoes = pygame.image.load('btn_opcoes.png')
 img_skip = pygame.image.load('btn_skip.png')
+img_return = pygame.image.load('btn_return.png')
 img_btn_play = pygame.image.load('btn_jogar.png')
 img_btn_char = pygame.image.load('btn_char.png')
 img_btn_inv = pygame.image.load('btn_bag.png')
@@ -91,6 +92,9 @@ def create_initial_buttons(btn_obj):
         return btn
     if btn_obj == 's':
         btn = pygame.Rect(780, 380, 200,200)
+        return btn
+    if btn_obj == 'r':
+        btn = pygame.Rect(30, 480, 100,100)
         return btn
  
 def create_main_buttons(btn_obj):
@@ -225,8 +229,15 @@ def continue_():
     running = True
     while running:
         screen.fill(screen_color)
- 
-        draw_text('continuar', consolas, (0, 0, 0), screen, 30, 20)
+        mx, my = pygame.mouse.get_pos()
+        click = False
+
+        if player.name != None:
+            draw_text(player.name, consolas, (0, 0, 0), screen, 30, 20)
+            draw_text('teste', consolas, (0, 0, 0), screen, 30, 150)
+        else:
+            draw_text('Não há registro', consolas, (0, 0, 0), screen, 30, 150)
+        
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -234,11 +245,21 @@ def continue_():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     running = False
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
         
+        btn_return = create_initial_buttons('r')
+        if btn_return.collidepoint((mx, my)):
+            if click:
+                initial_menu()
+
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        
+        screen.blit(img_return, btn_return)
         pygame.display.update()
         main_clock.tick(60)
 
@@ -246,7 +267,8 @@ def options():
     running = True
     while running:
         screen.fill(screen_color)
-        draw_text(' opcoes', consolas, (0, 0, 0), screen, 20, 20)
+        mx, my = pygame.mouse.get_pos()
+        click = False
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -255,11 +277,36 @@ def options():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     running = False
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
         
+        options_title = pygame.Rect(455, 30, 95, 33)
+        img_title = pygame.image.load('title_opcoes.png')
+        hotkeys_rect = pygame.Rect(340,100,51,341)
+        img_hotkeys = pygame.image.load('img_hotkeys.png')
+        btn_return = create_initial_buttons('r')
+
+        if btn_return.collidepoint((mx, my)):
+            if click:
+                initial_menu()
+        
+        draw_text('Inicia uma rodada', consolas, (0, 0, 0), screen, 410, 115)
+        draw_text('Acessa o personagem', consolas, (0, 0, 0), screen, 410, 175)
+        draw_text('Acessa o inventário', consolas, (0, 0, 0), screen, 410, 235)
+        draw_text('Salva o jogo', consolas, (0, 0, 0), screen, 410, 295)
+        draw_text('Acessa as opções', consolas, (0, 0, 0), screen, 410, 355)
+        draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
+
+        pygame.draw.rect(screen, (0, 0, 0), options_title)
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
+
+        screen.blit(img_title, options_title)
+        screen.blit(img_hotkeys, hotkeys_rect)
+        screen.blit(img_return, btn_return)
         pygame.display.update()
         main_clock.tick(60)
 
