@@ -56,6 +56,10 @@ class player:
     inventory = {}
 
 player = player()
+player.name = 'Matsubi'
+player.sex = 'f'
+player.profession = 'Arqueira'
+player.level = 1
 
 def blit_text(surface, text, pos, font, color):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
@@ -137,7 +141,6 @@ def create_char_def_btns(btn_obj):
 def initial_menu():
     while True:
         screen.fill(screen_color)
-        draw_text('menu inicial', consolas, (0, 0, 0), screen, 30, 20)
 
         mx, my = pygame.mouse.get_pos()
         
@@ -165,13 +168,16 @@ def initial_menu():
                 new_game()
         if btn_continuar.collidepoint((mx, my)):
             if click:
-                continue_()
+                if player.name != None:
+                    continue_()
         if btn_opcoes.collidepoint((mx, my)):
             if click:
                 options()
         
         pygame.draw.rect(screen, (0, 0, 0), btn_iniciar)
-        pygame.draw.rect(screen, (0, 0, 0), btn_continuar)
+        if player.name != None:
+            pygame.draw.rect(screen, (0, 0, 0), btn_continuar)
+            screen.blit(img_continuar, btn_continuar)
         pygame.draw.rect(screen, (0, 0, 0), btn_opcoes)
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
@@ -179,7 +185,6 @@ def initial_menu():
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
     
         screen.blit(img_iniciar, btn_iniciar)
-        screen.blit(img_continuar, btn_continuar)
         screen.blit(img_opcoes, btn_opcoes)
         pygame.display.update()
         main_clock.tick(60)
@@ -233,10 +238,29 @@ def continue_():
         click = False
 
         if player.name != None:
-            draw_text(player.name, consolas, (0, 0, 0), screen, 30, 20)
-            draw_text('teste', consolas, (0, 0, 0), screen, 30, 150)
+            player_frame = pygame.Rect(50, 50, 920, 200)
+            pygame.draw.rect(screen, screen_color, player_frame, 2)
+            player_img = pygame.Rect(100,60,134,184)
+            pygame.draw.rect(screen, screen_color, player_img)
+            draw_text(player.name, consolas, (0, 0, 0), screen, 290, 80)
+            draw_text(player.profession, consolas, (0, 0, 0), screen, 290, 120)
+            draw_text('Nível: ' + str(player.level), consolas, (0, 0, 0), screen, 290, 170)
+            if player.sex == 'f':
+                if player.profession == 'Maga':
+                    screen.blit(img_btn_magef, player_img)
+                if player.profession == 'Arqueira':
+                    screen.blit(img_btn_archf, player_img)
+                if player.profession == 'Espadachim':
+                    screen.blit(img_btn_swordf, player_img)
+            else:
+                if player.profession == 'Mago':
+                    screen.blit(img_btn_magem, player_img)
+                if player.profession == 'Arqueiro':
+                    screen.blit(img_btn_archm, player_img)
+                if player.profession == 'Espadachim':
+                    screen.blit(img_btn_swordm, player_img)
         else:
-            draw_text('Não há registro', consolas, (0, 0, 0), screen, 30, 150)
+            draw_text('Nenhum personagem foi criado :(', consolas, (0, 0, 0), screen, 310, 290)
         
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -253,6 +277,9 @@ def continue_():
         if btn_return.collidepoint((mx, my)):
             if click:
                 initial_menu()
+        if player_frame.collidepoint((mx, my)):
+            if click:
+                game_on()
 
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
@@ -283,7 +310,7 @@ def options():
         
         options_title = pygame.Rect(455, 30, 95, 33)
         img_title = pygame.image.load('title_opcoes.png')
-        hotkeys_rect = pygame.Rect(340,100,51,341)
+        hotkeys_rect = pygame.Rect(340,100,51,393)
         img_hotkeys = pygame.image.load('img_hotkeys.png')
         btn_return = create_initial_buttons('r')
 
@@ -297,6 +324,7 @@ def options():
         draw_text('Salva o jogo', consolas, (0, 0, 0), screen, 410, 295)
         draw_text('Acessa as opções', consolas, (0, 0, 0), screen, 410, 355)
         draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
+        draw_text('Retorna à tela anterior', consolas, (0, 0, 0), screen, 410, 470)
 
         pygame.draw.rect(screen, (0, 0, 0), options_title)
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
@@ -448,15 +476,15 @@ def char_prfs_male():
 
         if btn_mage.collidepoint((mx, my)):
             if click:
-                player.profession = 'mage'
+                player.profession = 'Mago'
                 char_name_def()
         if btn_archer.collidepoint((mx, my)):
             if click:
-                player.profession = 'archer'
+                player.profession = 'Arqueiro'
                 char_name_def()
         if btn_sword.collidepoint((mx, my)):
             if click:
-                player.profession = 'sword'
+                player.profession = 'Espadachim'
                 char_name_def()
 
         draw_text('Mago', consolas, (0,0,0), screen, 257, 400)
@@ -467,9 +495,9 @@ def char_prfs_male():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, (255, 255, 255), btn_mage)
-        pygame.draw.rect(screen, (255, 255, 255), btn_archer)
-        pygame.draw.rect(screen, (255, 255, 255), btn_sword)
+        pygame.draw.rect(screen, screen_color, btn_mage)
+        pygame.draw.rect(screen, screen_color, btn_archer)
+        pygame.draw.rect(screen, screen_color, btn_sword)
 
         screen.blit(img_btn_magem, btn_mage)
         screen.blit(img_btn_archm, btn_archer)
@@ -502,15 +530,15 @@ def char_prfs_fem():
 
         if btn_mage.collidepoint((mx, my)):
             if click:
-                player.profession = 'mage'
+                player.profession = 'Maga'
                 char_name_def()
         if btn_archer.collidepoint((mx, my)):
             if click:
-                player.profession = 'archer'
+                player.profession = 'Arqueira'
                 char_name_def()
         if btn_sword.collidepoint((mx, my)):
             if click:
-                player.profession = 'sword'
+                player.profession = 'Espadachim'
                 char_name_def()
 
         draw_text('Maga', consolas, (0,0,0), screen, 257, 400)
@@ -521,9 +549,9 @@ def char_prfs_fem():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, (255, 255, 255), btn_mage)
-        pygame.draw.rect(screen, (255, 255, 255), btn_archer)
-        pygame.draw.rect(screen, (255, 255, 255), btn_sword)
+        pygame.draw.rect(screen, screen_color, btn_mage)
+        pygame.draw.rect(screen, screen_color, btn_archer)
+        pygame.draw.rect(screen, screen_color, btn_sword)
 
         screen.blit(img_btn_magef, btn_mage)
         screen.blit(img_btn_archf, btn_archer)
@@ -579,7 +607,7 @@ def game_on():
     running = True
     while running:
         screen.fill(screen_color)
-        draw_text(player.name, consolas, (0, 0, 0), screen, 20, 20)
+        draw_text('game on!', consolas, (0, 0, 0), screen, 50, 50)
 
         for event in pygame.event.get():
             if event.type == QUIT:
