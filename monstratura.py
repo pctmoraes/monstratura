@@ -146,7 +146,6 @@ def initial_menu():
         img_monstratura = pygame.image.load('img_monstratura.png')
         mx, my = pygame.mouse.get_pos()
         
-        # create_initial_buttons(btn_obj)
         btn_iniciar = create_initial_buttons('i')
         btn_continuar = create_initial_buttons('c')
         btn_opcoes = create_initial_buttons('o')        
@@ -180,7 +179,7 @@ def initial_menu():
         if player.name != None:
             pygame.draw.rect(screen, (0, 0, 0), btn_continuar)
             screen.blit(img_continuar, btn_continuar)
-        pygame.draw.rect(screen, (0, 0, 0), btn_opcoes)
+
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
@@ -193,12 +192,13 @@ def initial_menu():
         main_clock.tick(60)
         
 def new_game():
+    hello = 'Olá,'
+    welcome = 'bem-vindo ao mundo de Monstratura!'
+    begin = 'sua jornada está para começar,'
+    cmds = 'mas antes vejamos os comandos básicos...'
+    
     running = True
     while running:
-        hello = 'Olá,'
-        welcome = 'bem-vindo ao mundo de Monstratura!'
-        begin = 'sua jornada está para começar,'
-        cmds = 'mas antes vejamos os comandos básicos...'
         screen.fill(screen_color)
         draw_text(hello, consolas, (0,0,0), screen, 480, 150)
         draw_text(welcome, consolas, (0,0,0), screen, 300, 240)
@@ -227,7 +227,6 @@ def new_game():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, (0, 0, 0), btn_skip)
 
         screen.blit(img_skip, btn_skip)
         pygame.display.update()
@@ -244,7 +243,6 @@ def continue_():
             player_frame = pygame.Rect(50, 50, 920, 200)
             pygame.draw.rect(screen, screen_color, player_frame, 2)
             player_img = pygame.Rect(100,60,134,184)
-            pygame.draw.rect(screen, screen_color, player_img)
             draw_text(player.name, consolas, (0, 0, 0), screen, 290, 80)
             draw_text(player.profession, consolas, (0, 0, 0), screen, 290, 120)
             draw_text('Nível: ' + str(player.level), consolas, (0, 0, 0), screen, 290, 170)
@@ -383,27 +381,21 @@ def tutorial():
         if not click:
             if not (current_time < 6000): #6000
                 draw_text('Ao clicar aqui você inicia uma rodada', consolas, (0, 0, 0), screen, 160, 115)
-                pygame.draw.rect(screen, (0, 0, 0), btn_play)
                 screen.blit(img_btn_play, btn_play)
             if not (current_time < 8000):#8000
                 draw_text('Ao clicar aqui você acessa seu personagem', consolas, (0, 0, 0), screen, 160, 175)
-                pygame.draw.rect(screen, (0, 0, 0), btn_char)
                 screen.blit(img_btn_char, btn_char)
             if not (current_time < 10000):#10000
                 draw_text('Ao clicar aqui você acessa seu inventário', consolas, (0, 0, 0), screen, 160, 235)
-                pygame.draw.rect(screen, (0, 0, 0), btn_inv)
                 screen.blit(img_btn_inv, btn_inv)
             if not (current_time < 12000):#12000
                 draw_text('Ao clicar aqui você salva o jogo', consolas, (0, 0, 0), screen, 160, 295)
-                pygame.draw.rect(screen, (0, 0, 0), btn_save)
                 screen.blit(img_btn_save, btn_save)
             if not (current_time < 14000):#14000
                 draw_text('Ao clicar aqui você acessa as opções', consolas, (0, 0, 0), screen, 160, 355)
-                pygame.draw.rect(screen, (0, 0, 0), btn_options)
                 screen.blit(img_btn_options, btn_options)
             if not (current_time < 16000):#16000
                 draw_text('Ao clicar aqui você acessa o menu inicial', consolas, (0, 0, 0), screen, 160, 415)
-                pygame.draw.rect(screen, (0, 0, 0), btn_menu)
                 screen.blit(img_btn_menu, btn_menu)
         else:
             char_sex_def()
@@ -412,7 +404,6 @@ def tutorial():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, (0, 0, 0), btn_skip)
         
         screen.blit(img_return, btn_return)
         screen.blit(img_skip, btn_skip)
@@ -454,15 +445,11 @@ def char_sex_def():
         if btn_return.collidepoint((mx, my)):
             if click:
                 tutorial()
-        
-
 
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, (0, 0, 0), btn_fem)
-        pygame.draw.rect(screen, (0, 0, 0), btn_masc)
 
         screen.blit(img_btn_fem, btn_fem)
         screen.blit(img_btn_masc, btn_masc)
@@ -518,9 +505,6 @@ def char_prfs_male():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, screen_color, btn_mage)
-        pygame.draw.rect(screen, screen_color, btn_archer)
-        pygame.draw.rect(screen, screen_color, btn_sword)
 
         screen.blit(img_btn_magem, btn_mage)
         screen.blit(img_btn_archm, btn_archer)
@@ -577,9 +561,6 @@ def char_prfs_fem():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, screen_color, btn_mage)
-        pygame.draw.rect(screen, screen_color, btn_archer)
-        pygame.draw.rect(screen, screen_color, btn_sword)
 
         screen.blit(img_btn_magef, btn_mage)
         screen.blit(img_btn_archf, btn_archer)
@@ -589,9 +570,9 @@ def char_prfs_fem():
         main_clock.tick(60)
 
 def char_name_def():
-    running = True
     input_rect = pygame.Rect(410,220,200,40)
     user_text = ''
+    running = True
     while running:
         screen.fill(screen_color)
         draw_text('Como é o nome do seu personagem?', consolas, (0, 0, 0), screen, 300, 140)
@@ -690,7 +671,6 @@ def game_info():
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
         pygame.draw.rect(screen, (194, 120, 194), line)
 
