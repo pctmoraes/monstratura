@@ -364,10 +364,14 @@ def tutorial():
         btn_save = create_main_buttons('s')
         btn_options = create_main_buttons('o')
         btn_menu = create_main_buttons('m')
+        btn_return = create_initial_buttons('r')
 
         if btn_skip.collidepoint((mx, my)):
             if click:
                 char_sex_def()
+        if btn_return.collidepoint((mx, my)):
+            if click:
+                new_game()
             
         if not click:
             if not (current_time < 6000): #6000
@@ -403,6 +407,7 @@ def tutorial():
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
         pygame.draw.rect(screen, (0, 0, 0), btn_skip)
         
+        screen.blit(img_return, btn_return)
         screen.blit(img_skip, btn_skip)
         pygame.display.update()
         main_clock.tick(60)
@@ -427,8 +432,10 @@ def char_sex_def():
                 if event.button == 1:
                     click = True
         
+        btn_return = create_initial_buttons('r')
         btn_fem = create_char_def_btns('f')
         btn_masc = create_char_def_btns('m')
+        
         if btn_fem.collidepoint((mx,my)):
             if click:
                 player.sex = 'f'
@@ -437,6 +444,10 @@ def char_sex_def():
             if click:
                 player.sex = 'm'
                 char_prfs_male()
+        if btn_return.collidepoint((mx, my)):
+            if click:
+                tutorial()
+        
 
 
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
@@ -448,6 +459,7 @@ def char_sex_def():
 
         screen.blit(img_btn_fem, btn_fem)
         screen.blit(img_btn_masc, btn_masc)
+        screen.blit(img_return, btn_return)
         pygame.display.update()
         main_clock.tick(60)
 
@@ -473,6 +485,7 @@ def char_prfs_male():
         btn_mage = create_char_def_btns('mage')
         btn_archer = create_char_def_btns('arch')
         btn_sword = create_char_def_btns('sword')
+        btn_return = create_initial_buttons('r')
 
         if btn_mage.collidepoint((mx, my)):
             if click:
@@ -486,6 +499,9 @@ def char_prfs_male():
             if click:
                 player.profession = 'Espadachim'
                 char_name_def()
+        if btn_return.collidepoint((mx, my)):
+            if click:
+                char_sex_def()
 
         draw_text('Mago', consolas, (0,0,0), screen, 257, 400)
         draw_text('Arqueiro', consolas, (0,0,0), screen, 455, 400)
@@ -502,6 +518,7 @@ def char_prfs_male():
         screen.blit(img_btn_magem, btn_mage)
         screen.blit(img_btn_archm, btn_archer)
         screen.blit(img_btn_swordm, btn_sword)
+        screen.blit(img_return, btn_return)
         pygame.display.update()
         main_clock.tick(60)
 
@@ -527,6 +544,7 @@ def char_prfs_fem():
         btn_mage = create_char_def_btns('mage')
         btn_archer = create_char_def_btns('arch')
         btn_sword = create_char_def_btns('sword')
+        btn_return = create_initial_buttons('r')
 
         if btn_mage.collidepoint((mx, my)):
             if click:
@@ -540,6 +558,9 @@ def char_prfs_fem():
             if click:
                 player.profession = 'Espadachim'
                 char_name_def()
+        if btn_return.collidepoint((mx, my)):
+            if click:
+                char_sex_def()
 
         draw_text('Maga', consolas, (0,0,0), screen, 257, 400)
         draw_text('Arqueira', consolas, (0,0,0), screen, 455, 400)
@@ -556,6 +577,7 @@ def char_prfs_fem():
         screen.blit(img_btn_magef, btn_mage)
         screen.blit(img_btn_archf, btn_archer)
         screen.blit(img_btn_swordf, btn_sword)
+        screen.blit(img_return, btn_return)
         pygame.display.update()
         main_clock.tick(60)
 
@@ -574,9 +596,7 @@ def char_name_def():
                 pygame.quit()
                 sys.exit()
             if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    running = False
-                if event.key == K_BACKSPACE:
+                if event.key == K_BACKSPACE or event.key == K_ESCAPE:
                     user_text = user_text[:-1]
                 else:
                     user_text += event.unicode
@@ -613,9 +633,6 @@ def game_on():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    running = False
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
