@@ -240,12 +240,12 @@ def continue_():
         click = False
 
         if player.name != None:
-            player_frame = pygame.Rect(50, 50, 920, 200)
-            pygame.draw.rect(screen, screen_color, player_frame, 2)
+            player_frame = pygame.Rect(70, 40, 880, 220)
+            pygame.draw.rect(screen, (0,0,0), player_frame, 2)
             player_img = pygame.Rect(100,60,134,184)
-            draw_text(player.name, consolas, (0, 0, 0), screen, 290, 80)
-            draw_text(player.profession, consolas, (0, 0, 0), screen, 290, 120)
-            draw_text('Nível: ' + str(player.level), consolas, (0, 0, 0), screen, 290, 170)
+            draw_text('Nome:       ' + player.name, consolas, (0, 0, 0), screen, 290, 80)
+            draw_text('Profissão:  ' + player.profession, consolas, (0, 0, 0), screen, 290, 120)
+            draw_text('Nível:      ' + str(player.level), consolas, (0, 0, 0), screen, 290, 160)
             if player.sex == 'f':
                 if player.profession == 'Maga':
                     screen.blit(img_btn_magef, player_img)
