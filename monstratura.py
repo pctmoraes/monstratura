@@ -86,13 +86,13 @@ def draw_text(text, font, color, surface, x, y):
 
 def create_initial_buttons(btn_obj):
     if btn_obj == 'i':
-        btn = pygame.Rect(410, 200, 200, 50)
+        btn = pygame.Rect(410, 230, 200, 50)
         return btn
     if btn_obj == 'c':
-        btn = pygame.Rect(410, 280, 200, 50)
+        btn = pygame.Rect(410, 310, 200, 50)
         return btn
     if btn_obj == 'o':
-        btn = pygame.Rect(410, 360, 200, 50)
+        btn = pygame.Rect(410, 390, 200, 50)
         return btn
     if btn_obj == 's':
         btn = pygame.Rect(780, 380, 200,200)
@@ -141,7 +141,9 @@ def create_char_def_btns(btn_obj):
 def initial_menu():
     while True:
         screen.fill(screen_color)
-
+        monstratura_rect = pygame.Rect(95, 42, 837, 77)
+        pygame.draw.rect(screen, screen_color, monstratura_rect)
+        img_monstratura = pygame.image.load('img_monstratura.png')
         mx, my = pygame.mouse.get_pos()
         
         # create_initial_buttons(btn_obj)
@@ -183,7 +185,8 @@ def initial_menu():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-    
+
+        screen.blit(img_monstratura, monstratura_rect)
         screen.blit(img_iniciar, btn_iniciar)
         screen.blit(img_opcoes, btn_opcoes)
         pygame.display.update()
@@ -313,10 +316,14 @@ def options():
         hotkeys_rect = pygame.Rect(340,100,51,393)
         img_hotkeys = pygame.image.load('img_hotkeys.png')
         btn_return = create_initial_buttons('r')
+        btn_skip = create_initial_buttons('s')
 
         if btn_return.collidepoint((mx, my)):
             if click:
                 initial_menu()
+        if btn_skip.collidepoint((mx, my)):
+            if click:
+                game_info()
         
         draw_text('Inicia uma rodada', consolas, (0, 0, 0), screen, 410, 115)
         draw_text('Acessa o personagem', consolas, (0, 0, 0), screen, 410, 175)
@@ -326,7 +333,6 @@ def options():
         draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
         draw_text('Retorna à tela anterior', consolas, (0, 0, 0), screen, 410, 470)
 
-        pygame.draw.rect(screen, (0, 0, 0), options_title)
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
@@ -335,6 +341,7 @@ def options():
         screen.blit(img_title, options_title)
         screen.blit(img_hotkeys, hotkeys_rect)
         screen.blit(img_return, btn_return)
+        screen.blit(img_skip, btn_skip)
         pygame.display.update()
         main_clock.tick(60)
 
@@ -633,6 +640,9 @@ def game_on():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
@@ -641,6 +651,51 @@ def game_on():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.display.update()
+        main_clock.tick(60)
+
+def game_info():
+    running = True
+    while running:
+        screen.fill(screen_color)
+        draw_text('Monstratura v0.1 : Todos os direitos reservados', consolas, (0, 0, 0), screen, 70, 150)
+        draw_text('Projeto: Paula Moraes', consolas, (0, 0, 0), screen, 70, 250)
+        draw_text('E-mail: paulactmoraes@hotmail.com', consolas, (0, 0, 0), screen, 70, 300)
+        draw_text('Instagram: @aluaq_', consolas, (0, 0, 0), screen, 70, 350)
+        
+
+        mx, my = pygame.mouse.get_pos()
+        click = False
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+        
+        contact_title = pygame.Rect(455, 35, 95, 33)
+        img_title = pygame.image.load('title_contato.png')
+        btn_return = create_initial_buttons('r')
+
+        if btn_return.collidepoint((mx, my)):
+            if click:
+                options()
+        
+        line = pygame.Rect(50,200, 920, 5)
+        pygame.draw.rect(screen, (194, 120, 194), edge_top)
+        pygame.draw.rect(screen, (194, 120, 194), edge_right)
+        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
+        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, (194, 120, 194), line)
+
+        screen.blit(img_title, contact_title)
+        screen.blit(img_return, btn_return)
         pygame.display.update()
         main_clock.tick(60)
 
