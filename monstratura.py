@@ -21,8 +21,9 @@ img_return = pygame.image.load('btn_return.png')
 img_btn_play = pygame.image.load('btn_jogar.png')
 img_btn_char = pygame.image.load('btn_char.png')
 img_btn_inv = pygame.image.load('btn_bag.png')
+img_btn_album = pygame.image.load('btn_album.png')
 img_btn_save = pygame.image.load('btn_save.png')
-img_btn_options = pygame.image.load('btn_options.png')
+# img_btn_options = pygame.image.load('btn_options.png')
 img_btn_menu = pygame.image.load('btn_menu.png')
 img_btn_fem = pygame.image.load('btn_mulher.png')
 img_btn_masc = pygame.image.load('btn_homem.png')
@@ -111,10 +112,10 @@ def create_main_buttons(btn_obj):
     if btn_obj == 'i':
         btn = pygame.Rect(920, 440, 50, 50)
         return btn
-    if btn_obj == 's':
+    if btn_obj == 'a':
         btn = pygame.Rect(775, 520, 50,50)
         return btn
-    if btn_obj == 'o':
+    if btn_obj == 's':
         btn = pygame.Rect(845, 520, 50,50)
         return btn
     if btn_obj == 'm':
@@ -326,8 +327,8 @@ def options():
         draw_text('Inicia uma rodada', consolas, (0, 0, 0), screen, 410, 115)
         draw_text('Acessa o personagem', consolas, (0, 0, 0), screen, 410, 175)
         draw_text('Acessa o inventário', consolas, (0, 0, 0), screen, 410, 235)
-        draw_text('Salva o jogo', consolas, (0, 0, 0), screen, 410, 295)
-        draw_text('Acessa as opções', consolas, (0, 0, 0), screen, 410, 355)
+        draw_text('Abre o álbum de cartas', consolas, (0, 0, 0), screen, 410, 295)
+        draw_text('Salva o jogo', consolas, (0, 0, 0), screen, 410, 355)
         draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
         draw_text('Retorna à tela anterior', consolas, (0, 0, 0), screen, 410, 470)
 
@@ -376,8 +377,8 @@ def tutorial():
         draw_text('Inicia uma rodada', consolas, (0, 0, 0), screen, 410, 115)
         draw_text('Acessa o personagem', consolas, (0, 0, 0), screen, 410, 175)
         draw_text('Acessa o inventário', consolas, (0, 0, 0), screen, 410, 235)
-        draw_text('Salva o jogo', consolas, (0, 0, 0), screen, 410, 295)
-        draw_text('Acessa as opções', consolas, (0, 0, 0), screen, 410, 355)
+        draw_text('Abre o álbum de cartas', consolas, (0, 0, 0), screen, 410, 295)
+        draw_text('Salva o jogo', consolas, (0, 0, 0), screen, 410, 355)
         draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
         draw_text('Retorna à tela anterior', consolas, (0, 0, 0), screen, 410, 470)
 
@@ -617,12 +618,13 @@ def game_on():
         btn_play = create_main_buttons('p')
         btn_char = create_main_buttons('c')
         btn_inv = create_main_buttons('i')
+        btn_album = create_main_buttons('a')
         btn_save = create_main_buttons('s')
-        btn_options = create_main_buttons('o')
         btn_menu = create_main_buttons('m')
         
-        # if botao.collidepoint((mx, my)):
-        #     if click:
+        if btn_inv.collidepoint((mx, my)):
+            if click:
+                inventory()
                 
         
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
@@ -634,8 +636,8 @@ def game_on():
         screen.blit(img_btn_play, btn_play)
         screen.blit(img_btn_char, btn_char)
         screen.blit(img_btn_inv, btn_inv)
+        screen.blit(img_btn_album, btn_album)
         screen.blit(img_btn_save, btn_save)
-        screen.blit(img_btn_options, btn_options)
         screen.blit(img_btn_menu, btn_menu)
         
         pygame.display.update()
@@ -684,5 +686,42 @@ def game_info():
         screen.blit(img_return, btn_return)
         pygame.display.update()
         main_clock.tick(60)
+
+def inventory():
+    running = True
+    while running:
+        mx, my = pygame.mouse.get_pos()
+        click = False
+
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+            
+        img_shelve = pygame.image.load('shelve.png')
+        shelve_rect = pygame.Rect(120, 100, 552, 411)
+        tst_rect = pygame.Rect(240, 133, 520, 338)
+
+        if tst_rect.collidepoint((mx, my)):
+            if click:
+                running = False
+
+        pygame.draw.rect(screen, (194, 120, 194), edge_top)
+        pygame.draw.rect(screen, (194, 120, 194), edge_right)
+        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
+        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, (0,0,0), tst_rect)
+
+        screen.blit(img_shelve, shelve_rect)
+
+        pygame.display.update()
+        main_clock.tick(60)
+
 
 initial_menu()
