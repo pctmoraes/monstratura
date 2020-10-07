@@ -103,22 +103,22 @@ def create_initial_buttons(btn_obj):
  
 def create_main_buttons(btn_obj):
     if btn_obj == 'p':
-        btn = pygame.Rect(80, 100, 50, 50)
+        btn = pygame.Rect(775, 440, 50, 50)
         return btn
     if btn_obj == 'c':
-        btn = pygame.Rect(80, 160, 50, 50)
+        btn = pygame.Rect(845, 440, 50, 50)
         return btn
     if btn_obj == 'i':
-        btn = pygame.Rect(80, 220, 50, 50)
+        btn = pygame.Rect(920, 440, 50, 50)
         return btn
     if btn_obj == 's':
-        btn = pygame.Rect(80, 280, 50,50)
+        btn = pygame.Rect(775, 520, 50,50)
         return btn
     if btn_obj == 'o':
-        btn = pygame.Rect(80, 340, 50,50)
+        btn = pygame.Rect(845, 520, 50,50)
         return btn
     if btn_obj == 'm':
-        btn = pygame.Rect(80, 400, 50,50)
+        btn = pygame.Rect(920, 520, 50,50)
         return btn
 
 def create_char_def_btns(btn_obj):
@@ -346,11 +346,10 @@ def options():
 def tutorial():
     running = True
     while running:
-        current_time = pygame.time.get_ticks()
         screen.fill(screen_color)
         mx, my = pygame.mouse.get_pos()
         click = False
-        
+
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -362,49 +361,32 @@ def tutorial():
                 if event.button == 1:
                     click = True
         
-        btn_skip = create_initial_buttons('s')
-        btn_play = create_main_buttons('p')
-        btn_char = create_main_buttons('c')
-        btn_inv = create_main_buttons('i')
-        btn_save = create_main_buttons('s')
-        btn_options = create_main_buttons('o')
-        btn_menu = create_main_buttons('m')
+        hotkeys_rect = pygame.Rect(340,100,51,393)
+        img_hotkeys = pygame.image.load('img_hotkeys.png')
         btn_return = create_initial_buttons('r')
+        btn_skip = create_initial_buttons('s')
 
-        if btn_skip.collidepoint((mx, my)):
-            if click:
-                char_sex_def()
         if btn_return.collidepoint((mx, my)):
             if click:
                 new_game()
-            
-        if not click:
-            if not (current_time < 6000): #6000
-                draw_text('Ao clicar aqui você inicia uma rodada', consolas, (0, 0, 0), screen, 160, 115)
-                screen.blit(img_btn_play, btn_play)
-            if not (current_time < 8000):#8000
-                draw_text('Ao clicar aqui você acessa seu personagem', consolas, (0, 0, 0), screen, 160, 175)
-                screen.blit(img_btn_char, btn_char)
-            if not (current_time < 10000):#10000
-                draw_text('Ao clicar aqui você acessa seu inventário', consolas, (0, 0, 0), screen, 160, 235)
-                screen.blit(img_btn_inv, btn_inv)
-            if not (current_time < 12000):#12000
-                draw_text('Ao clicar aqui você salva o jogo', consolas, (0, 0, 0), screen, 160, 295)
-                screen.blit(img_btn_save, btn_save)
-            if not (current_time < 14000):#14000
-                draw_text('Ao clicar aqui você acessa as opções', consolas, (0, 0, 0), screen, 160, 355)
-                screen.blit(img_btn_options, btn_options)
-            if not (current_time < 16000):#16000
-                draw_text('Ao clicar aqui você acessa o menu inicial', consolas, (0, 0, 0), screen, 160, 415)
-                screen.blit(img_btn_menu, btn_menu)
-        else:
-            char_sex_def()
+        if btn_skip.collidepoint((mx, my)):
+            if click:
+                char_sex_def()
+        
+        draw_text('Inicia uma rodada', consolas, (0, 0, 0), screen, 410, 115)
+        draw_text('Acessa o personagem', consolas, (0, 0, 0), screen, 410, 175)
+        draw_text('Acessa o inventário', consolas, (0, 0, 0), screen, 410, 235)
+        draw_text('Salva o jogo', consolas, (0, 0, 0), screen, 410, 295)
+        draw_text('Acessa as opções', consolas, (0, 0, 0), screen, 410, 355)
+        draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
+        draw_text('Retorna à tela anterior', consolas, (0, 0, 0), screen, 410, 470)
 
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        
+
+        screen.blit(img_hotkeys, hotkeys_rect)
         screen.blit(img_return, btn_return)
         screen.blit(img_skip, btn_skip)
         pygame.display.update()
@@ -615,7 +597,9 @@ def game_on():
     running = True
     while running:
         screen.fill(screen_color)
-        draw_text('game on!', consolas, (0, 0, 0), screen, 50, 50)
+        # draw_text('game on!', consolas, (0, 0, 0), screen, 50, 50)
+        mx, my = pygame.mouse.get_pos()
+        click = False
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -628,10 +612,32 @@ def game_on():
                 if event.button == 1:
                     click = True
         
+        img_shelve = pygame.image.load('shelve.png')
+        shelve_rect = pygame.Rect(120, 100, 552, 411)
+        btn_play = create_main_buttons('p')
+        btn_char = create_main_buttons('c')
+        btn_inv = create_main_buttons('i')
+        btn_save = create_main_buttons('s')
+        btn_options = create_main_buttons('o')
+        btn_menu = create_main_buttons('m')
+        
+        # if botao.collidepoint((mx, my)):
+        #     if click:
+                
+        
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
+
+        screen.blit(img_shelve, shelve_rect)
+        screen.blit(img_btn_play, btn_play)
+        screen.blit(img_btn_char, btn_char)
+        screen.blit(img_btn_inv, btn_inv)
+        screen.blit(img_btn_save, btn_save)
+        screen.blit(img_btn_options, btn_options)
+        screen.blit(img_btn_menu, btn_menu)
+        
         pygame.display.update()
         main_clock.tick(60)
 
