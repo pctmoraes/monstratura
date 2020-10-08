@@ -9,6 +9,7 @@ main_clock = pygame.time.Clock()
 pygame.display.set_caption('M O N S T R A T U R A')
 screen = pygame.display.set_mode((1020, 620),0,32)
 screen_color = (255,255,200)
+purple = (194, 120, 194)
 consolas = pygame.font.SysFont('consolas', 24)
 click = False
 
@@ -23,7 +24,6 @@ img_btn_char = pygame.image.load('images/btn_char.png')
 img_btn_inv = pygame.image.load('images/btn_bag.png')
 img_btn_album = pygame.image.load('images/btn_album.png')
 img_btn_save = pygame.image.load('images/btn_save.png')
-# img_btn_options = pygame.image.load('btn_options.png')
 img_btn_menu = pygame.image.load('images/btn_menu.png')
 img_btn_fem = pygame.image.load('images/btn_mulher.png')
 img_btn_masc = pygame.image.load('images/btn_homem.png')
@@ -40,27 +40,27 @@ edge_right = pygame.Rect(1000,10,10,600)
 edge_bottom = pygame.Rect(10, 600, 1000, 10)
 edge_left = pygame.Rect(10, 10, 10, 600)
 
-class player:
-    name = None
-    sex = None
-    profession = None
-    level = None
-    hit_points = None       
-    mana_points = None
-    gold = None
-    helm = None
-    armor = None
-    legs = None
-    boots = None
-    weapon = None
-    shield = None
-    inventory = {}
+class Player:
+    def __init__(self, level):
+        self.level = level
+        self.name = None
+        self.sex = None
+        self.profession = None
+        self.hit_points = None       
+        self.mana_points = None
+        self.gold = None
+        self.helm = None
+        self.armor = None
+        self.legs = None
+        self.boots = None
+        self.weapon = None
+        self.shield = None
+        self.inventory = {}
 
-player = player()
+player = Player(1)
 player.name = 'Matsubi'
 player.sex = 'f'
-player.profession = 'Arqueira'
-player.level = 1
+player.profession = 'Maga'
 
 def blit_text(surface, text, pos, font, color):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
@@ -181,10 +181,10 @@ def initial_menu():
             pygame.draw.rect(screen, (0, 0, 0), btn_continuar)
             screen.blit(img_continuar, btn_continuar)
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_monstratura, monstratura_rect)
         screen.blit(img_iniciar, btn_iniciar)
@@ -224,10 +224,10 @@ def new_game():
             if click:
                 tutorial()
         
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_skip, btn_skip)
         pygame.display.update()
@@ -283,10 +283,10 @@ def continue_():
             if click:
                 game_on()
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
         
         screen.blit(img_return, btn_return)
         pygame.display.update()
@@ -332,10 +332,10 @@ def options():
         draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
         draw_text('Retorna à tela anterior', consolas, (0, 0, 0), screen, 410, 470)
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_title, options_title)
         screen.blit(img_hotkeys, hotkeys_rect)
@@ -382,10 +382,10 @@ def tutorial():
         draw_text('Acessa o menu inicial', consolas, (0, 0, 0), screen, 410, 415)
         draw_text('Retorna à tela anterior', consolas, (0, 0, 0), screen, 410, 470)
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_hotkeys, hotkeys_rect)
         screen.blit(img_return, btn_return)
@@ -429,10 +429,10 @@ def char_sex_def():
             if click:
                 tutorial()
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_btn_fem, btn_fem)
         screen.blit(img_btn_masc, btn_masc)
@@ -484,10 +484,10 @@ def char_prfs_male():
         draw_text('Arqueiro', consolas, (0,0,0), screen, 455, 400)
         draw_text('Espadachim', consolas, (0,0,0), screen, 675, 400)
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_btn_magem, btn_mage)
         screen.blit(img_btn_archm, btn_archer)
@@ -540,10 +540,10 @@ def char_prfs_fem():
         draw_text('Arqueira', consolas, (0,0,0), screen, 455, 400)
         draw_text('Espadachim', consolas, (0,0,0), screen, 675, 400)
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_btn_magef, btn_mage)
         screen.blit(img_btn_archf, btn_archer)
@@ -584,10 +584,10 @@ def char_name_def():
                 player.name = user_text
                 game_on()
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
         
         screen.blit(text_surface, (input_rect.x + 10, input_rect.y + 10))
         screen.blit(img_skip, btn_skip)
@@ -629,10 +629,10 @@ def game_on():
                 initial_menu()
                 
         
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
 
         screen.blit(img_shelve, shelve_rect)
         screen.blit(img_btn_play, btn_play)
@@ -678,11 +678,11 @@ def game_info():
                 options()
         
         line = pygame.Rect(50,200, 920, 5)
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, (194, 120, 194), line)
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
+        pygame.draw.rect(screen, purple, line)
 
         screen.blit(img_title, contact_title)
         screen.blit(img_return, btn_return)
@@ -690,6 +690,8 @@ def game_info():
         main_clock.tick(60)
 
 def inventory():
+    lightbrown = (127, 80, 53)
+    brown = (81, 52, 34)
     running = True
     while running:
         mx, my = pygame.mouse.get_pos()
@@ -715,12 +717,21 @@ def inventory():
             if click:
                 running = False
 
-        pygame.draw.rect(screen, (194, 120, 194), edge_top)
-        pygame.draw.rect(screen, (194, 120, 194), edge_right)
-        pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
-        pygame.draw.rect(screen, (194, 120, 194), edge_left)
+        bag_edge_top = pygame.Rect(288, 95, 445, 10)
+        bag_edge_right = pygame.Rect(723,105,10,365)
+        bag_edge_bottom = pygame.Rect(288, 460, 440, 10)
+        bag_edge_left = pygame.Rect(283, 95, 10, 374)
+
+        pygame.draw.rect(screen, purple, edge_top)
+        pygame.draw.rect(screen, purple, edge_right)
+        pygame.draw.rect(screen, purple, edge_bottom)
+        pygame.draw.rect(screen, purple, edge_left)
+        pygame.draw.rect(screen, brown, bag_edge_top)
+        pygame.draw.rect(screen, brown, bag_edge_right)
+        pygame.draw.rect(screen, brown, bag_edge_bottom)
+        pygame.draw.rect(screen, brown, bag_edge_left)
         
-        pygame.draw.rect(screen, (127, 80, 53), inventory_rect)
+        pygame.draw.rect(screen, lightbrown, inventory_rect)
         screen.blit(img_btn_exit, btn_exit)
         pygame.display.update()
         main_clock.tick(60)
