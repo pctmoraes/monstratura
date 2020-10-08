@@ -13,26 +13,26 @@ consolas = pygame.font.SysFont('consolas', 24)
 click = False
 
 # image load
-img_iniciar = pygame.image.load('btn_iniciar.png')
-img_continuar = pygame.image.load('btn_continuar.png')
-img_opcoes = pygame.image.load('btn_opcoes.png')
-img_skip = pygame.image.load('btn_skip.png')
-img_return = pygame.image.load('btn_return.png')
-img_btn_play = pygame.image.load('btn_jogar.png')
-img_btn_char = pygame.image.load('btn_char.png')
-img_btn_inv = pygame.image.load('btn_bag.png')
-img_btn_album = pygame.image.load('btn_album.png')
-img_btn_save = pygame.image.load('btn_save.png')
+img_iniciar = pygame.image.load('images/btn_iniciar.png')
+img_continuar = pygame.image.load('images/btn_continuar.png')
+img_opcoes = pygame.image.load('images/btn_opcoes.png')
+img_skip = pygame.image.load('images/btn_skip.png')
+img_return = pygame.image.load('images/btn_return.png')
+img_btn_play = pygame.image.load('images/btn_jogar.png')
+img_btn_char = pygame.image.load('images/btn_char.png')
+img_btn_inv = pygame.image.load('images/btn_bag.png')
+img_btn_album = pygame.image.load('images/btn_album.png')
+img_btn_save = pygame.image.load('images/btn_save.png')
 # img_btn_options = pygame.image.load('btn_options.png')
-img_btn_menu = pygame.image.load('btn_menu.png')
-img_btn_fem = pygame.image.load('btn_mulher.png')
-img_btn_masc = pygame.image.load('btn_homem.png')
-img_btn_magem = pygame.image.load('mago.png')
-img_btn_archm = pygame.image.load('arqueiro.png')
-img_btn_swordm = pygame.image.load('espado.png')
-img_btn_magef = pygame.image.load('maga.png')
-img_btn_archf = pygame.image.load('arqueira.png')
-img_btn_swordf = pygame.image.load('espada.png')
+img_btn_menu = pygame.image.load('images/btn_menu.png')
+img_btn_fem = pygame.image.load('images/btn_mulher.png')
+img_btn_masc = pygame.image.load('images/btn_homem.png')
+img_btn_magem = pygame.image.load('images/mago.png')
+img_btn_archm = pygame.image.load('images/arqueiro.png')
+img_btn_swordm = pygame.image.load('images/espado.png')
+img_btn_magef = pygame.image.load('images/maga.png')
+img_btn_archf = pygame.image.load('images/arqueira.png')
+img_btn_swordf = pygame.image.load('images/espada.png')
 
 # create egdes
 edge_top = pygame.Rect(10, 10, 1000, 10)
@@ -144,7 +144,7 @@ def initial_menu():
         screen.fill(screen_color)
         monstratura_rect = pygame.Rect(95, 42, 837, 77)
         pygame.draw.rect(screen, screen_color, monstratura_rect)
-        img_monstratura = pygame.image.load('img_monstratura.png')
+        img_monstratura = pygame.image.load('images/img_monstratura.png')
         mx, my = pygame.mouse.get_pos()
         
         btn_iniciar = create_initial_buttons('i')
@@ -311,9 +311,9 @@ def options():
                     click = True
         
         options_title = pygame.Rect(455, 30, 95, 33)
-        img_title = pygame.image.load('title_opcoes.png')
+        img_title = pygame.image.load('images/title_opcoes.png')
         hotkeys_rect = pygame.Rect(340,100,51,393)
-        img_hotkeys = pygame.image.load('img_hotkeys.png')
+        img_hotkeys = pygame.image.load('images/img_hotkeys.png')
         btn_return = create_initial_buttons('r')
         btn_skip = create_initial_buttons('s')
 
@@ -363,7 +363,7 @@ def tutorial():
                     click = True
         
         hotkeys_rect = pygame.Rect(340,100,51,393)
-        img_hotkeys = pygame.image.load('img_hotkeys.png')
+        img_hotkeys = pygame.image.load('images/img_hotkeys.png')
         btn_return = create_initial_buttons('r')
         btn_skip = create_initial_buttons('s')
 
@@ -598,7 +598,6 @@ def game_on():
     running = True
     while running:
         screen.fill(screen_color)
-        # draw_text('game on!', consolas, (0, 0, 0), screen, 50, 50)
         mx, my = pygame.mouse.get_pos()
         click = False
 
@@ -613,7 +612,7 @@ def game_on():
                 if event.button == 1:
                     click = True
         
-        img_shelve = pygame.image.load('shelve.png')
+        img_shelve = pygame.image.load('images/shelve.png')
         shelve_rect = pygame.Rect(120, 100, 552, 411)
         btn_play = create_main_buttons('p')
         btn_char = create_main_buttons('c')
@@ -625,6 +624,9 @@ def game_on():
         if btn_inv.collidepoint((mx, my)):
             if click:
                 inventory()
+        if btn_menu.collidepoint((mx, my)):
+            if click:
+                initial_menu()
                 
         
         pygame.draw.rect(screen, (194, 120, 194), edge_top)
@@ -668,7 +670,7 @@ def game_info():
                     click = True
         
         contact_title = pygame.Rect(455, 35, 95, 33)
-        img_title = pygame.image.load('title_contato.png')
+        img_title = pygame.image.load('images/title_contato.png')
         btn_return = create_initial_buttons('r')
 
         if btn_return.collidepoint((mx, my)):
@@ -704,11 +706,12 @@ def inventory():
                 if event.button == 1:
                     click = True
             
-        img_shelve = pygame.image.load('shelve.png')
-        shelve_rect = pygame.Rect(120, 100, 552, 411)
-        tst_rect = pygame.Rect(240, 133, 520, 338)
+        
+        inventory_rect = pygame.Rect(293, 105, 430, 355)
+        btn_exit = pygame.Rect(680, 118, 30, 30)
+        img_btn_exit = pygame.image.load('images/btn_exit.png')
 
-        if tst_rect.collidepoint((mx, my)):
+        if btn_exit.collidepoint((mx, my)):
             if click:
                 running = False
 
@@ -716,10 +719,9 @@ def inventory():
         pygame.draw.rect(screen, (194, 120, 194), edge_right)
         pygame.draw.rect(screen, (194, 120, 194), edge_bottom)
         pygame.draw.rect(screen, (194, 120, 194), edge_left)
-        pygame.draw.rect(screen, (0,0,0), tst_rect)
-
-        screen.blit(img_shelve, shelve_rect)
-
+        
+        pygame.draw.rect(screen, (127, 80, 53), inventory_rect)
+        screen.blit(img_btn_exit, btn_exit)
         pygame.display.update()
         main_clock.tick(60)
 
