@@ -6,6 +6,8 @@ Um RPG baseado em turnos ao qual o jogador irá enfretar monstros da literatura,
 
 ![TELA INICIAL](https://github.com/pctmoraes/monstratura/blob/master/tela_inicial.jpg)
 
+![TELA OPCOES](https://github.com/pctmoraes/monstratura/blob/master/tela_opcoes.jpg)
+
 ![TELA PRINCIPAL](https://github.com/pctmoraes/monstratura/blob/master/tela_principal.jpg)
 
 ![PERSONAGEM](https://github.com/pctmoraes/monstratura/blob/master/personagem.jpg)
